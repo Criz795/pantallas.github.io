@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recarga Automática de Imágenes y Videos</title>
+    <style>
+        #display {
+            text-align: center;
+            margin-top: 10px;
+            width: 100%;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        video {
+            width: 100%;
+            height: auto;
+            pointer-events: none;
+        }
+        iframe {
+            width: 100%;
+            height: 1080px; /* Ajusta la altura */
+            border: none; /* Quitar borde del iframe */
+        }
+    </style>
+</head>
+<body>
+    <div id="display"></div>
+    
+    <script>
+        const items = [
+            { type: 'image', src: 'https://lh5.googleusercontent.com/duyPeXPj7Lv9gL6N2VGsMQVzXhSFbSXyF623O4pZuyoyGAKKmr-QwTsXnEewcZwmvwhPdPdE96Rm9HS2aZN8na0' },
+            { type: 'image', src: 'https://lh5.googleusercontent.com/vtHsR_rlk1LqKq5OaMs7cb-swDpEBZbDPh701NrGQOmpO8NKoiv9DlamMLp1J2WLVsYTOxG8nGrtLt2rZYKDZqQ' },
+            { type: 'image', src: 'https://lh5.googleusercontent.com/ArxuI0LZIjArJwIx2Zd9GCYpdsfBbB8h1MrMt0cKcLzrqKUge24Jstk0TQavIIqXywhtpM_olaDVdInCLem9HRo' }, 
+            { type: 'video', src: 'https://drive.google.com/uc?id=1ThFoUCDwL-9ZOpF2_DRST_dn_iwLcj69' },
+            { type: 'iframe', src: 'https://vmyguest.venturae.com.mx/pantallas/5' } 
+        ];
+        
+        let index = 0;
+
+        function displayNext() {
+            const display = document.getElementById('display');
+            display.innerHTML = '';
+
+            const item = items[index];
+
+            if (item.type === 'image') {
+                const img = document.createElement('img');
+                img.src = item.src;
+                display.appendChild(img);
+            } else if (item.type === 'video') {
+                const video = document.createElement('video');
+                video.src = item.src;
+                video.autoplay = true; // Reproducción automática
+                video.loop = true;     // Repetir video
+                video.muted = true;    // Silenciar video
+                display.appendChild(video);
+            } else if (item.type === 'iframe') {
+                const iframe = document.createElement('iframe');
+                iframe.src = item.src;
+                display.appendChild(iframe);
+            }
+
+            index = (index + 1) % items.length;
+        }
+
+        setInterval(displayNext, 300); // Cambiar cada 30 segundos
+        displayNext(); // Mostrar el primer item inmediatamente
+    </script>
+</body>
+</html>
